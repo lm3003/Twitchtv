@@ -1,0 +1,46 @@
+<div class="col-1 text-center">
+                        <div class="card-block">All</div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <div class="card-block">Online</div>
+                    </div>
+                    <div class="col-3 text-center">
+                        <div class="card-block">Offline</div>
+                    </div>
+
+
+
+                    $("#offline-lists").on("click", function () {
+                            $("#channel-info").empty();
+                            allChannels();
+                            channels.forEach(function (curr) {
+                                var stream = "https://wind-bow.glitch.me/twitch-api/streams/" + curr;
+                                streamOffline(stream, curr);
+                            });
+                        });
+
+                        function streamOffline(stream, curr) {
+                            $.getJSON(stream, function (json) {
+                               if(json.stream){
+                                   $("#" + curr).remove();
+                               }
+                            });
+                        }
+
+                        $("#online-lists").on("click", function () {
+                            $("#channel-info").empty();
+                            allChannels();
+                            channels.forEach(function (curr) {
+                                var stream = "https://wind-bow.glitch.me/twitch-api/streams/" + curr;
+                                streamOnline(stream, curr);
+
+                            });
+                        });
+
+                        function streamOnline(stream, curr) {
+                            $.getJSON(stream, function (json) {
+                                if(!json.stream){
+                                    $("#" + curr).remove();
+                                }
+                            });
+                        }
